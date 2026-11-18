@@ -1,5 +1,10 @@
 # pi-freellmapi-sync
 
+[![Pi Extension](https://img.shields.io/badge/Pi-Coding%20Agent-111111?style=for-the-badge&logo=terminal&logoColor=white)](https://pi.dev/)
+[![FreeLLMAPI Compatible](https://img.shields.io/badge/FreeLLMAPI-Compatible-2563EB?style=for-the-badge)](https://github.com/tashfeenahmed/freellmapi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-rjcamandona123%2Fpi--freellmapi--sync-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rjcamandona123/pi-freellmapi-sync)
+
 Pi coding agent extension for [FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi) — a local, open-source router that puts many free-tier LLM providers behind one OpenAI-compatible endpoint.
 
 It auto-starts the local gateway, keeps Pi's `freellmapi` model catalog in sync with what the gateway actually serves, and adds two commands:
