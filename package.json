@@ -1,0 +1,33 @@
+{
+  "name": "pi-freellmapi-sync",
+  "version": "0.1.0",
+  "description": "Pi coding agent extension for FreeLLMAPI — auto-starts the local gateway, syncs the live model catalog, and adds /setup.",
+  "type": "module",
+  "pi": {
+    "extensions": ["./pi/extension.ts"]
+  },
+  "files": [
+    "pi/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "pi",
+    "pi-package",
+    "pi-extension",
+    "freellmapi",
+    "ai",
+    "llm",
+    "llm-router",
+    "free-tier",
+    "setup"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjcamandona123/pi-freellmapi-sync.git"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
