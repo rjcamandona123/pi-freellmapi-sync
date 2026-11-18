@@ -12,7 +12,7 @@ It auto-starts the local gateway, keeps Pi's `freellmapi` model catalog in sync 
 - `/setup` — first-time wizard (gateway → unified key → official generator → end-to-end check)
 - `/freellmapi-sync` — force gateway start + refresh the live catalog
 
-This is a standalone Pi package. It does not modify the OpenCode plugin.
+This is a standalone Pi package.
 
 ## Install
 
