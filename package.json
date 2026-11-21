@@ -1,6 +1,6 @@
 {
   "name": "pi-freellmapi-sync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pi coding agent extension for FreeLLMAPI — auto-starts the local gateway, syncs the live model catalog, and adds /setup.",
   "type": "module",
   "pi": {

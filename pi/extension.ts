@@ -5,6 +5,7 @@
 //   - automatic local gateway activation (source build, tsx source, or Docker/Podman Compose)
 //   - live model-catalog sync through Pi's dynamic provider refreshModels
 //   - /freellmapi-sync (force start + refresh) and /setup (first-run wizard)
+//   - `?`, `help`, `/?`, and `/help` print the FreeLLMAPI localhost guide
 
 import { spawn } from "node:child_process";
 import {
@@ -34,6 +35,49 @@ const COMPOSE_FILES = [
   "compose.yml",
   "compose.yaml",
 ];
+
+const GUIDE_FALLBACK = `FreeLLMAPI official localhost guide
+====================================
+
+Server / terminal install:
+  gateway origin:         http://localhost:3001
+  OpenAI-compatible base: http://localhost:3001/v1
+  model catalog:          http://localhost:3001/v1/models
+  chat completions:       http://localhost:3001/v1/chat/completions
+
+Desktop app:
+  gateway origin:         http://127.0.0.1:31415
+  OpenAI-compatible base: http://127.0.0.1:31415/v1
+  Claude Desktop base:    http://127.0.0.1:31415  (without /v1)
+
+Override the plugins with FREELLMAPI_BASE_URL when using the desktop app or a
+non-default port. Docs: https://github.com/tashfeenahmed/freellmapi
+`;
+
+function guidePaths(): string[] {
+  const home = os.homedir();
+  return [
+    process.env.FRELLMAPI_GUIDE?.trim() || "",
+    path.join(home, "freellmapi_guide"),
+    path.join(home, "MIGRATE", "root", "freellmapi_guide"),
+  ].filter(Boolean) as string[];
+}
+
+function readGuide(): string {
+  for (const file of guidePaths()) {
+    try {
+      const text = readFileSync(file, "utf8").trimEnd();
+      if (text) return text;
+    } catch {
+      /* try the next known location */
+    }
+  }
+  return GUIDE_FALLBACK.trimEnd();
+}
+
+function printGuide(): void {
+  process.stdout.write(`\n${readGuide()}\n`);
+}
 
 function envNumber(name: string, fallback: number): number {
   const n = Number(process.env[name]);
@@ -626,6 +670,25 @@ export default function (pi: any) {
     if (ctx.model?.provider !== PROVIDER_ID) return;
     await ensureServer(baseURL);
   });
+
+  // `?` and `help` work both as bare prompts and as slash commands. The input
+  // hook handles the bare form so no LLM turn is spent on it.
+  pi.on("input", async (event: any) => {
+    const text = String(event?.text || "").trim();
+    if (text === "?" || text.toLowerCase() === "help") {
+      printGuide();
+      return { action: "handled" };
+    }
+  });
+
+  for (const name of ["?", "help"]) {
+    pi.registerCommand(name, {
+      description: "Print the official FreeLLMAPI localhost guide",
+      handler: async () => {
+        printGuide();
+      },
+    });
+  }
 
   pi.registerCommand("freellmapi-sync", {
     description: "Start the FreeLLMAPI gateway (if needed) and refresh its model catalog",

@@ -11,6 +11,7 @@ It auto-starts the local gateway, keeps Pi's `freellmapi` model catalog in sync 
 
 - `/setup` — first-time wizard (gateway → unified key → official generator → end-to-end check)
 - `/freellmapi-sync` — force gateway start + refresh the live catalog
+- `?`, `help`, `/?`, `/help` — print the official localhost guide stored in `~/freellmapi_guide`
 
 This is a standalone Pi package.
 
@@ -44,6 +45,17 @@ Run `/setup` in Pi. It walks through:
 You can pass a key privately: `/setup freellmapi-…`. It is stored only in the process environment and never echoed into the transcript.
 
 If FreeLLMAPI is not installed, `/setup` stops and shows the options (Docker one-liner, git source, desktop app) instead of guessing.
+
+## Localhost guide
+
+Type `?` or `help` in the Pi prompt (or run `/?` / `/help`) to print the guide from `~/freellmapi_guide`. The guide states the official endpoints:
+
+| Install | Gateway origin | OpenAI-compatible base URL |
+| --- | --- | --- |
+| Server / Docker / source | `http://localhost:3001` | `http://localhost:3001/v1` |
+| Desktop app | `http://127.0.0.1:31415` | `http://127.0.0.1:31415/v1` |
+
+`FRELLMAPI_GUIDE` can point to an alternate guide file. If no guide file is found, the extension prints its built-in copy of these endpoints.
 
 ## What the extension does
 
